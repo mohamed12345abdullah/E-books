@@ -79,12 +79,12 @@ const bookSchema = new mongoose.Schema(
         coverImageUrl: {
             type: String,
             required: [true, "Cover image URL is required"],
-            validate: {
-                validator: function (value) {
-                    return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(value);
-                },
-                message: "Invalid URL format for cover image",
-            },
+            // validate: {
+            //     validator: function (value) {
+            //         return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(value);
+            //     },
+            //     message: "Invalid URL format for cover image",
+            // },
         },
         // Additional image URLs for the book
         additionalImages: {
