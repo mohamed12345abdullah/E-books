@@ -34,6 +34,14 @@ const userSchema = new mongoose.Schema({
         },
         select: true, // Prevents the password from being returned in queries
     },
+    cart: 
+        [
+            {
+                book: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' },
+                quantity: { type: Number, required: true }
+            }
+        ]
+    ,
 }, {
     timestamps: true,
 });

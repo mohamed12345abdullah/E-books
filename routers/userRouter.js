@@ -11,4 +11,13 @@ Router.post('/register', registerValidation, hashPassword, UserController.regist
 // Route for user login
 Router.post('/login', loginValidation, UserController.log_in);
 
+// Router for add to cart
+Router.post('/addToCart', UserController.addToCart);
+
+// Router for remove from cart
+Router.post('/removeFromCart', UserController.removeFromCart);
+
+// Router for get cart
+Router.get('/getCart', UserController.getCart);
+
 module.exports = Router;
