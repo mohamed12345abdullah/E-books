@@ -18,8 +18,12 @@ exports.addBookValidation = [
         .isFloat({ min: 0 }).withMessage('Original price must be a positive number'),
     body('discountedPrice')
         .isFloat({ min: 0 }).withMessage('Discounted price must be a positive number')
-        .custom((value, { req }) => value <= req.body.originalPrice)
-        .withMessage('Discounted price cannot exceed original price'),
+        .custom((value, { req }) => {
+            if (value > req.body.originalPrice) {
+                throw new Error('Discounted price cannot exceed original price');
+            }
+            return true;
+        }),
     body('coverImageUrl')
         .isURL().withMessage('Cover image URL must be valid'),
     body('stock')

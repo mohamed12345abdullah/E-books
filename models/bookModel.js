@@ -56,13 +56,17 @@ const bookSchema = new mongoose.Schema(
             required: [true, "Discounted price is required"],
             min: [0, "Discounted price cannot be negative"],
             validate: {
-                // Ensure discounted price is not greater than the original price
                 validator: function (value) {
-                    return value <= this.originalPrice;
+                    const originalPrice = this.get('originalPrice');
+                    console.log("Discounted Price: ", value);
+                    console.log("Original Price: ", originalPrice);
+                    return value < originalPrice;
                 },
                 message: "Discounted price cannot exceed the original price",
             },
         },
+        
+        
         // Automatically calculate discount percentage
         discountPercentage: {
             type: Number,
