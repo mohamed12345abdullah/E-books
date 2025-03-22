@@ -19,7 +19,7 @@ Router.get("/get/:id", getBookByIdValidation, BookController.getBookById);
 Router.put("/update/:id", addBookValidation, calculateDiscountPercentage, BookController.updateBook);
 
 // Route for deleting a book by ID
-Router.delete("/delete/:id", BookController.deleteBook);
+Router.delete("/delete/:id", getBookByIdValidation, BookController.deleteBook);
 
 // Global error handling
 Router.use(handleBookError);
