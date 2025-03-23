@@ -2,20 +2,30 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const connectDatabase = require('./middlewares/databaseMiddleware');
 const setupCommonMiddleware = require('./middlewares/commonMiddleware');
 const responseMiddleware = require('./middlewares/responseMiddleware');
 
 const orderRouter = require('./routers/orderRouter'); 
 
+
+app.use(cors({ origin: "*" }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+
 dotenv.config();
 
 const app = express();
 
 // Add the response middleware
-app.use(responseMiddleware);
+// app.use(responseMiddleware);
 
 console.log("runnnn");
+
 
 
 setupCommonMiddleware(app);
