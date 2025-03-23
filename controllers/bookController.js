@@ -24,9 +24,12 @@ class BookController {
     static async getAllBooks(req, res) {
         try {
             const books = await Book.find();
+            console.log(books);
             res.status(200).json({
-                message: "Books retrieved successfully",
+                message: "Books retrieveddd successfully",
                 books,
+                data: books,
+                status: "success",
             });
         } catch (error) {
             res.status(500).json({
