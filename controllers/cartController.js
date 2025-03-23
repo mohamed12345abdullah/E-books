@@ -1,4 +1,5 @@
-const Cart = require("../models/cartModel");
+// const Cart = require("../models/cartModel");
+const User = require("../models/userModel");
 const Book = require("../models/bookModel");
 const Order = require("../models/orderModel");
 
@@ -30,9 +31,10 @@ class CartController {
 
   static async getCart(req, res) {
 
-    const email=req.email;
+
 
     try {
+      const email=req.email;
       const cart = await User.findOne({ email},{cart:1}).populate("cart.book").Cart; 
 
       if (!cart) {
