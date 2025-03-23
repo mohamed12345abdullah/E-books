@@ -18,7 +18,7 @@ app.use(responseMiddleware);
 console.log("runnnn");
 
 
-// setupCommonMiddleware(app);
+setupCommonMiddleware(app);
 
 // Use the database connection middleware
 connectDatabase();
