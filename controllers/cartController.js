@@ -34,14 +34,14 @@ class CartController {
 
 
     try {
-      const email=req.email;
-      const cart = await User.findOne({ email},{cart:1}).populate("cart.book").Cart; 
-
+      const id=req.id;
+      const cart = await User.findOne({ _id:id},{cart:1}).populate("cart.book"); 
+      console.log("cart is ",cart);
       if (!cart) {
         return res.status(404).json({ status: "error", message: "Cart not found" });
       }
 
-      res.status(200).json({ status: "success", message: "Cart found", data: cart });
+      res.status(200).json({ status: "success", message: "Cart found", data: cart.cart });
     } catch (error) {
       res.status(500).json({ status: "error", message: "Something went wrong", details: error.message });
     }

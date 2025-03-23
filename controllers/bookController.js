@@ -78,7 +78,8 @@ class BookController {
 
             res.status(200).json({
                 message: "Book updated successfully",
-                book: updatedBook,
+                data: updatedBook,
+                status: "success",
             });
         } catch (error) {
             res.status(500).json({

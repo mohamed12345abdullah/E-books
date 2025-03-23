@@ -44,7 +44,13 @@ class UserController {
             }
             // Generate token
             const token = generateToken(user._id);
-            res.status(200).json({ message: 'Login successful', token });
+            res.status(200).json({ 
+                message: 'Login successful',
+                data: {
+                    token,
+                    user
+                },
+                status: "success" });
         } catch (error) {
             console.log("error",error);
             
