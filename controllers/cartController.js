@@ -13,7 +13,7 @@ class CartController {
         return res.status(404).json({ status: "error", message: "User not found" });
       }
 
-      const cart = user.cart;
+      const cart = user.cart; 
       cart.push({
         book: req.body.bookId,
         quantity: req.body.quantity
