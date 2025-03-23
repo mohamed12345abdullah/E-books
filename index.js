@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const connectDatabase = require('./middlewares/databaseMiddleware');
 const setupCommonMiddleware = require('./middlewares/commonMiddleware');
@@ -19,7 +18,7 @@ app.use(responseMiddleware);
 console.log("runnnn");
 
 
-setupCommonMiddleware(app);
+// setupCommonMiddleware(app);
 
 // Use the database connection middleware
 connectDatabase();
