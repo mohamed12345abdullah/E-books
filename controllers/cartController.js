@@ -5,10 +5,10 @@ const Order = require("../models/orderModel");
 
 class CartController {
   static async addToCart(req, res) {
-    const email=req.email;
+    const id=req.id;
 
     try {
-      const user = await User.findOne({ email});
+      const user = await User.findOne({ _id:id});
       if (!user) {
         return res.status(404).json({ status: "error", message: "User not found" });
       }
@@ -48,10 +48,10 @@ class CartController {
   }
 
   static async removeFromCart(req, res) {
-    const email=req.email;
+    const id=req.id;
 
     try {
-      const user = await User.findOne({ email});
+      const user = await User.findOne({ _id:id});
       if (!user) {
         return res.status(404).json({ status: "error", message: "User not found" });
       }
