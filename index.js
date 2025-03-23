@@ -9,6 +9,7 @@ const setupCommonMiddleware = require('./middlewares/commonMiddleware');
 const responseMiddleware = require('./middlewares/responseMiddleware');
 
 const orderRouter = require('./routers/orderRouter'); 
+const app = express();
 
 
 app.use(cors({ origin: "*" }));
@@ -19,7 +20,6 @@ app.use(bodyParser.json());
 
 dotenv.config();
 
-const app = express();
 
 // Add the response middleware
 // app.use(responseMiddleware);
