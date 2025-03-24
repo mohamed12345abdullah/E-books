@@ -86,8 +86,8 @@ class CartController {
         console.log("book is ",item._id);
 
         // console.log("bookId is ",b);
-        if (item._id.toString() == bookId.toString()) {
-          // user.cart.pull(item);
+        if (item.book.toString() == bookId.toString()) {
+          user.cart.pull(item);
           console.log("true");
           return;
         }
