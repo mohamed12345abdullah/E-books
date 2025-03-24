@@ -12,11 +12,21 @@ class CartController {
       if (!user) {
         return res.status(404).json({ status: "error", message: "User not found" });
       }
-
+      const {bookId, quantity} = req.body;
+      if(!bookId ){
+        return res.status(400).json({ status: "error", message: "bookId is required" });
+      }
+      if(!quantity){
+        return res.status(400).json({ status: "error", message: "quantity is required" });
+      }
+      const book = await Book.findById(bookId);
+      if (!book) {
+        return res.status(404).json({ status: "error", message: "Book not found" });
+      }
       const cart = user.cart; 
       cart.push({
-        book: req.body.bookId,
-        quantity: req.body.quantity
+        book: bookId,
+        quantity
       });
       await user.save();
 
@@ -56,8 +66,11 @@ class CartController {
         return res.status(404).json({ status: "error", message: "User not found" });
       }
 
+      const {bookId} = req.body;
+      if(!bookId){
+        return res.status(400).json({ status: "error", message: "bookId is required" });
+      }
       const cart = user.cart;
-      const bookId = req.body.bookId;
       cart = cart.filter(item => item.book.toString() !== bookId);
       await user.save();
 
