@@ -6,13 +6,13 @@ const Order = require("../models/orderModel");
 class CartController {
   static async addToCart(req, res) {
     const id=req.id;
+    const {bookId, quantity} = req.body;
 
     try {
       const user = await User.findOne({ _id:id});
       if (!user) {
         return res.status(404).json({ status: "error", message: "User not found" });
       }
-      const {bookId, quantity} = req.body;
       if(!bookId ){
         return res.status(400).json({ status: "error", message: "bookId is required" });
       }
@@ -23,11 +23,23 @@ class CartController {
       if (!book) {
         return res.status(404).json({ status: "error", message: "Book not found" });
       }
+
+     
       const cart = user.cart; 
+
+      const existingItem = cart.find(item => item.book == bookId);
+      if (existingItem) {
+        existingItem.quantity += quantity;
+        await user.save();
+        return res.status(200).json({ status: "success", message: "Book added to cart", cart });
+      }
+
+
       cart.push({
         book: bookId,
         quantity
       });
+
       await user.save();
 
       res.status(200).json({ status: "success", message: "Book added to cart", cart });
@@ -56,22 +68,34 @@ class CartController {
 
   static async removeFromCart(req, res) {
     const id=req.id;
-
+    const {bookId} = req.body;
+    console.log("bookId body is ",bookId);
     try {
       const user = await User.findOne({ _id:id});
       if (!user) {
         return res.status(404).json({ status: "error", message: "User not found" });
       }
 
-      const {bookId} = req.body;
       if(!bookId){
         return res.status(400).json({ status: "error", message: "bookId is required" });
       }
-      const cart = user.cart;
-      cart = cart.filter(item => item.book.toString() !== bookId);
+      
+
+      
+      user.cart.forEach(item => {
+        console.log("book is ",item._id);
+
+        // console.log("bookId is ",b);
+        if (item._id.toString() == bookId.toString()) {
+          // user.cart.pull(item);
+          console.log("true");
+          return;
+        }
+      });
+      console.log("cart is ",user.cart);
       await user.save();
 
-      res.status(200).json({ status: "success", message: "Book removed from cart", cart });
+      res.status(200).json({ status: "success", message: "Book removed from cart", data: user.cart });
     } catch (error) {
       res.status(500).json({ status: "error", message: "Something went wrong", details: error.message });
     }
