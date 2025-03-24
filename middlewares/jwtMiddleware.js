@@ -7,7 +7,7 @@ const generateToken = (userId) => {
 const verifyToken = async (req, res, next) => {
     const headers = req.headers.authorization || req.headers.Authorization;
 
-    if (!headers || !headers.startsWith('Bearer ')) {
+    if (!headers ) {
         return res.status(401).json({ message: 'Unauthorized: No token provided' });
     }
 

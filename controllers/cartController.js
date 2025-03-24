@@ -40,9 +40,6 @@ class CartController {
   }
 
   static async getCart(req, res) {
-
-
-
     try {
       const id=req.id;
       const cart = await User.findOne({ _id:id},{cart:1}).populate("cart.book"); 

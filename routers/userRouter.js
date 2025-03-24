@@ -19,7 +19,7 @@ Router.post('/login',  loginValidation, UserController.log_in);
 Router.post('/addToCart', verifyToken, cartController.addToCart);
 
 // Router for remove from cart
-Router.post('/removeFromCart', verifyToken, cartController.removeFromCart);
+Router.delete('/removeFromCart', verifyToken, cartController.removeFromCart);
 
 // Router for get cart
 Router.get('/getCart', verifyToken, cartController.getCart);
