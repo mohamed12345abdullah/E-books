@@ -42,6 +42,9 @@ const userSchema = new mongoose.Schema({
             }
         ]
     ,
+    arrayOfIps: [{
+        ip: { type: String, ref: 'Guest' }
+    }],
 }, {
     timestamps: true,
 });

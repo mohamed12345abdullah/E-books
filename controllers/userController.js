@@ -27,7 +27,7 @@ class UserController {
 
     static async log_in(req, res) {
         try {
-            const { email, password } = req.body;
+            const { email, password,ip } = req.body;
 
             // Check if user exists and compare password
             const user = await User.findOne({ email });
@@ -45,6 +45,11 @@ class UserController {
             }
             // Generate token
             const token = generateToken(user._id);
+            const existingIp = user.arrayOfIps.find((item) => item.ip === ip);
+            if (!existingIp) {
+                user.arrayOfIps.push({ ip });
+            }
+            await user.save();
             res.status(200).json({ 
                 message: 'Login successful',
                 data: {
@@ -112,6 +117,19 @@ class UserController {
             res.status(500).json({ message: 'Failed to get guests', error: error.message });
         }
     }
+
+
+    static async getAllUsersVisits(req, res) {
+        try {
+            const users = await User.find().populate('arrayOfIps.ip');
+            res.status(200).json({ status: "success", message: 'Users found', data: users });
+        } catch (error) {
+            res.status(500).json({ message: 'Failed to get users', error: error.message });
+        }
+    }
+
+
+
 
 
 }

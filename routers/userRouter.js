@@ -32,6 +32,12 @@ Router.post('/seen/start', UserController.seenUser);
 
 Router.post('/seen/end', UserController.endVisit);
 
+// gest log in 
 
+// Router for get all guests
+Router.get('/seen/getAllGuests', UserController.getAllGuests);
+
+// Router for get all users visits
+Router.get('/seen/getAllUsersVisits', UserController.getAllUsersVisits);
 
 module.exports = Router;
