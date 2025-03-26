@@ -26,4 +26,12 @@ Router.get('/getCart', verifyToken, cartController.getCart);
 
 
 
+// seen user
+
+Router.post('/seen/start', UserController.seenUser);
+
+Router.post('/seen/end', UserController.endVisit);
+
+
+
 module.exports = Router;

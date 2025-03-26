@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Guest = require('../models/guestModel');
 const { hashPassword, comparePassword } = require('../middlewares/passwordMiddleware');
 const { generateToken } = require('../middlewares/jwtMiddleware');
 
@@ -55,6 +56,50 @@ class UserController {
             console.log("error",error);
             
             res.status(500).json({ message: 'Failed to log in user', error: error.message });
+        }
+    }
+
+
+
+    static async seenUser(req, res) {
+        try {
+                const {ip}=req.body;
+                
+                const guest = await Guest.findOne({ ip });
+
+                if(guest){
+                    guest.numberOfVisits += 1;
+                    guest.history.push({
+                        startTime: new Date(),
+                    });
+                    await guest.save();
+                    res.status(200).json({ status: "success", message: 'Guest found', user: guest });
+                }
+                else{
+                    const newGuest = await Guest.create({ ip, numberOfVisits: 1, history: [{ startTime: new Date() }] });
+                    res.status(200).json({ status: "success", message: 'Guest created', user: newGuest });
+                }
+        } catch (error) {
+            res.status(500).json({ message: 'Failed to get user', error: error.message });
+        }
+    }
+
+
+    static async endVisit(req, res) {
+        try {
+            const {ip}=req.body;
+            const guest = await Guest.findOne({ ip });
+            if(!guest){
+                return res.status(404).json({ message: 'Guest not found' });
+            }
+            guest.history.push({
+                endTime: new Date(),
+                timeSpent: new Date() - guest.history[guest.history.length - 1].startTime
+            });
+            await guest.save();
+            res.status(200).json({ message: 'Visit ended', user: guest });
+        } catch (error) {
+            res.status(500).json({ message: 'Failed to end visit', error: error.message });
         }
     }
 }
