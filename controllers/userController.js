@@ -97,11 +97,23 @@ class UserController {
                 timeSpent: new Date() - guest.history[guest.history.length - 1].startTime
             });
             await guest.save();
-            res.status(200).json({ message: 'Visit ended', user: guest });
+            res.status(200).json({ status: "success", message: 'Visit ended', user: guest });
         } catch (error) {
             res.status(500).json({ message: 'Failed to end visit', error: error.message });
         }
     }
+
+
+    static async getAllGuests(req, res) {
+        try {
+            const guests = await Guest.find();
+            res.status(200).json({ status: "success", message: 'Guests found', data: guests });
+        } catch (error) {
+            res.status(500).json({ message: 'Failed to get guests', error: error.message });
+        }
+    }
+
+
 }
 
 module.exports = UserController;
